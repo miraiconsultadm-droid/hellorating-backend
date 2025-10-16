@@ -1,0 +1,17 @@
+{
+  "name": "hellorating-backend",
+  "version": "1.0.0",
+  "description": "Backend API para HelloRating - Sistema de Pesquisa de Satisfação",
+  "main": "api/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node api/index.js",
+    "start": "node api/index.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}
+
