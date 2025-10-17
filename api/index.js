@@ -6,8 +6,19 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(cors({ origin: '*' }));
 app.use(express.json());
+app.use(cors());
+
+// Adicionar cabeçalhos CORS explícitos para garantir que o Vercel não bloqueie
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
 
 // Supabase Client
 const supabaseUrl = process.env.SUPABASE_URL || '';
