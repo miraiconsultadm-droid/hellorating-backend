@@ -174,6 +174,31 @@ app.get('/api/campaigns/:id/questions', async (req, res) => {
   }
 });
 
+// Create new campaign
+app.post('/api/campaigns', async (req, res) => {
+  try {
+    const newCampaign = req.body;
+    
+    if (supabase) {
+      const { data, error } = await supabase
+        .from('campaigns')
+        .insert([newCampaign])
+        .select()
+        .single();
+      
+      if (error) throw error;
+      res.status(201).json(data);
+    } else {
+      newCampaign.id = `mock-${Date.now()}`; // Gerar um ID mock
+      mockCampaigns.push(newCampaign);
+      res.status(201).json(newCampaign);
+    }
+  } catch (error) {
+    console.error('Error creating campaign:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Update campaign
 app.put('/api/campaigns/:id', async (req, res) => {
   try {
